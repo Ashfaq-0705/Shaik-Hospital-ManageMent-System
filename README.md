@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Hospital Management System
 
 A console-based Hospital Management System built with **Python** and **SQLite**.
@@ -107,3 +108,7 @@ hospital_management_system/
 - Designed and developed a modular Hospital Management System in Python using SQLite, implementing full CRUD functionality across four interconnected entities (patients, doctors, appointments, billing).
 - Structured the application using separation of concerns (database layer, business logic modules, CLI presentation layer), enabling easy extension to a GUI or web framework.
 - Implemented relational data integrity using foreign keys and cascading deletes to maintain consistency across appointment and billing records.
+=======
+# Shaik-Hospital-ManageMent-System
+Hospital Management System developed using Python and SQLite to manage patient records, doctor information, appointments, billing, and medical history through a simple and efficient interface.
+>>>>>>> 3198b78be38ab322a555b94581f5893c5d2dee9d
