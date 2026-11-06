@@ -1,114 +1,191 @@
-<<<<<<< HEAD
-# Hospital Management System
+# Shaik Hospital Management System
 
-A console-based Hospital Management System built with **Python** and **SQLite**.
-It manages patients, doctors, appointments, and billing through a clean,
-menu-driven interface — a great demonstration of CRUD operations, relational
-database design, and modular Python programming.
+A full-stack Hospital Management System with a React frontend and FastAPI backend, built on SQLite.
 
-## Features
+## Tech Stack
 
-- **Patient Management** — add, view, search, update, and delete patient records
-- **Doctor Management** — add, view, search by specialization, update, and delete doctors
-- **Appointment Scheduling** — book appointments linking patients and doctors, track status (Scheduled / Completed / Cancelled)
-- **Billing** — generate bills, track paid/unpaid status, view revenue and pending dues summary
-- **Persistent storage** using SQLite (no external database server required)
-- **Referential integrity** via foreign keys (e.g. deleting a patient cascades to their appointments and bills)
+### Backend
+- Python 3.10+
+- FastAPI
+- SQLAlchemy ORM
+- SQLite
+- JWT Authentication (PyJWT)
+- bcrypt password hashing
+- Pydantic validation
+
+### Frontend
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS v4
+- React Router
+- Axios
+- Recharts
+- Lucide React
 
 ## Project Structure
 
 ```
 hospital_management_system/
-│
-├── main.py                # Entry point — console menu interface
-├── database.py             # Database connection & table initialization
-├── modules/
-│   ├── __init__.py
-│   ├── patient.py          # Patient CRUD operations
-│   ├── doctor.py            # Doctor CRUD operations
-│   ├── appointment.py      # Appointment scheduling logic
-│   └── billing.py          # Billing & revenue logic
-├── requirements.txt
+├── backend/
+│   ├── app/
+│   │   ├── main.py              # FastAPI entry point
+│   │   ├── database.py          # SQLAlchemy config
+│   │   ├── models/              # ORM models
+│   │   ├── schemas/             # Pydantic schemas
+│   │   ├── routers/             # API endpoints
+│   │   ├── services/            # Business logic
+│   │   ├── core/                # Config & security
+│   │   └── migrations/          # DB migration scripts
+│   ├── startup.py               # Server startup script
+│   ├── requirements.txt         # Python dependencies
+│   └── .env.example            # Environment variables template
+├── frontend/
+│   ├── src/
+│   │   ├── components/          # Reusable components
+│   │   ├── pages/               # Page components
+│   │   ├── layouts/             # Layout components
+│   │   ├── services/            # API services
+│   │   ├── context/             # React context
+│   │   └── types/               # TypeScript types
+│   ├── package.json
+│   └── vite.config.ts
+├── hospital.db                   # SQLite database
+├── hospital.db.bak.*            # Database backup
+├── main.py                      # Original console app
+├── modules/                     # Original modules
+├── database.py                  # Original DB module
 └── README.md
 ```
 
-## Tech Stack
+## Setup Instructions
 
-- **Language:** Python 3
-- **Database:** SQLite3 (built into Python's standard library)
-- **No external dependencies required**
+### Prerequisites
+- Python 3.8+
+- Node.js 18+
+- npm or yarn
 
-## How to Run
+### Backend Setup
 
-1. Make sure Python 3.8+ is installed.
-2. Navigate to the project folder:
+1. Navigate to the backend directory:
    ```bash
-   cd hospital_management_system
+   cd backend
    ```
-3. Run the application:
+
+2. Install Python dependencies:
    ```bash
-   python main.py
+   pip install -r requirements.txt
    ```
-4. The database (`hospital.db`) will be created automatically on first run.
-5. Follow the on-screen menu to manage patients, doctors, appointments, and bills.
 
-## Database Schema
+3. Copy environment variables:
+   ```bash
+   cp .env.example .env
+   ```
 
-**patients**
-| Column | Type |
-|---|---|
-| patient_id | INTEGER (PK) |
-| name | TEXT |
-| age | INTEGER |
-| gender | TEXT |
-| contact | TEXT |
-| address | TEXT |
-| disease | TEXT |
-| admission_date | TEXT |
+4. Start the backend server:
+   ```bash
+   python startup.py
+   ```
 
-**doctors**
-| Column | Type |
-|---|---|
-| doctor_id | INTEGER (PK) |
-| name | TEXT |
-| specialization | TEXT |
-| contact | TEXT |
-| consultation_fee | REAL |
+The backend will run on `http://localhost:8000`
+- Swagger API docs: `http://localhost:8000/api/docs`
+- ReDoc: `http://localhost:8000/api/redoc`
 
-**appointments**
-| Column | Type |
-|---|---|
-| appointment_id | INTEGER (PK) |
-| patient_id | INTEGER (FK -> patients) |
-| doctor_id | INTEGER (FK -> doctors) |
-| appointment_date | TEXT |
-| appointment_time | TEXT |
-| status | TEXT |
+**Default Admin Credentials:**
+- Username: `admin`
+- Password: `admin123`
+- Role: Admin
 
-**bills**
-| Column | Type |
-|---|---|
-| bill_id | INTEGER (PK) |
-| patient_id | INTEGER (FK -> patients) |
-| description | TEXT |
-| amount | REAL |
-| bill_date | TEXT |
-| paid_status | TEXT |
+### Frontend Setup
 
-## Possible Extensions (great talking points for interviews)
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
 
-- Add a Tkinter or PyQt GUI on top of the existing modules
-- Convert to a Flask/Django web app with the same database layer
-- Add user authentication and role-based access (admin, doctor, receptionist)
-- Export reports (patient list, revenue) to PDF or Excel
-- Add unit tests with `pytest` for each module
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Resume Bullet Point Suggestions
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-- Designed and developed a modular Hospital Management System in Python using SQLite, implementing full CRUD functionality across four interconnected entities (patients, doctors, appointments, billing).
-- Structured the application using separation of concerns (database layer, business logic modules, CLI presentation layer), enabling easy extension to a GUI or web framework.
-- Implemented relational data integrity using foreign keys and cascading deletes to maintain consistency across appointment and billing records.
-=======
-# Shaik-Hospital-ManageMent-System
-Hospital Management System developed using Python and SQLite to manage patient records, doctor information, appointments, billing, and medical history through a simple and efficient interface.
->>>>>>> 3198b78be38ab322a555b94581f5893c5d2dee9d
+The frontend will run on `http://localhost:5173`
+
+### Database
+
+The SQLite database (`hospital.db`) is located in the project root. It contains:
+- `patients` - Patient records
+- `doctors` - Doctor records
+- `appointments` - Appointment scheduling
+- `bills` - Billing records
+- `users` - User accounts
+- `medical_records` - Patient medical history
+- `payments` - Payment records
+
+A backup is created automatically during migration: `hospital.db.bak.*`
+
+## API Endpoints
+
+| Group | Endpoint | Description |
+|-------|----------|-------------|
+| Auth | `/api/auth/login` | User login |
+| Auth | `/api/auth/register` | User registration |
+| Auth | `/api/auth/me` | Current user info |
+| Patients | `/api/patients/` | Patient CRUD |
+| Doctors | `/api/doctors/` | Doctor CRUD |
+| Appointments | `/api/appointments/` | Appointment CRUD |
+| Billing | `/api/billing/` | Billing CRUD |
+| Billing | `/api/billing/revenue/summary` | Revenue summary |
+| Dashboard | `/api/dashboard/stats` | Dashboard statistics |
+| Dashboard | `/api/dashboard/monthly-revenue` | Monthly revenue chart data |
+| Dashboard | `/api/dashboard/appointment-stats` | Appointment statistics |
+| Users | `/api/users/` | User management (Admin only) |
+
+## User Roles
+
+| Role | Permissions |
+|------|-------------|
+| Admin | Full system access, user management |
+| Doctor | View appointments, patient info |
+| Receptionist | Register patients, schedule appointments, manage billing |
+
+## Features
+
+- **Patient Management** - Add, view, search, update, delete patients
+- **Doctor Management** - Register, view, search, filter by specialization
+- **Appointment Scheduling** - Book appointments with conflict prevention
+- **Billing** - Generate bills, track payments, revenue analytics
+- **Dashboard** - Real-time statistics and charts
+- **Authentication** - JWT-based with role-based access control
+- **Responsive Design** - Works on desktop, tablet, and mobile
+
+## Development Phases Completed
+
+1. ✅ Repository analysis and backup
+2. ✅ Backend restructuring and database integration
+3. ✅ API development
+4. ✅ Frontend setup and dashboard design
+5. ✅ Patient management
+6. ✅ Doctor management
+7. ✅ Appointment management
+8. ✅ Billing management
+9. ✅ Authentication and role-based access
+10. ✅ Analytics and additional features
+11. ✅ Integration testing
+12. ✅ Documentation and deployment preparation
+
+## Console Application (Original)
+
+The original console-based application is still available:
+
+```bash
+python main.py
+```
+
+## License
+
+This project is for educational and demonstration purposes.
